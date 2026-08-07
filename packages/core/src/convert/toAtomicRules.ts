@@ -21,7 +21,7 @@ const toStringOfObject = Object.prototype.toString;
  * Converts selectors, conditions, and a declaration into a CSS rule string.
  */
 const toCssString = (declaration: string, selectors: string[], conditions: string[]): string =>
-  `${conditions.map((c) => `${c}{`).join("")}${selectors.join(",")}{${declaration}}${"}".repeat(conditions.length + 1)}`;
+  `${conditions.map((c) => `${c}{`).join("")}${selectors.join(",")}{${declaration}}${"}".repeat(conditions.length)}`;
 
 /**
  * Decomposes a style object into atomic CSS rules — one rule per property-value pair.
@@ -35,6 +35,7 @@ const toCssString = (declaration: string, selectors: string[], conditions: strin
 export const toAtomicCssRules = (
   style: CSSObject,
   config: StitchesConfig,
+  layer: string,
   onAtomicRule: (className: string, cssText: string) => void,
 ): string[] => {
   const classNames: string[] = [];
@@ -133,7 +134,7 @@ export const toAtomicCssRules = (
               .map((s) => s.replace(/&/g, ""))
               .filter(Boolean)
               .join(",");
-            const hashInput = [...conditions, selectorSuffix, declaration].join("|");
+            const hashInput = [layer, ...conditions, selectorSuffix, declaration].join("|");
             const atomicClassName = `s-${toHash(hashInput)}`;
 
             // Build the final selector by replacing & with .{atomicClassName}

@@ -18,6 +18,29 @@ describe("atomic mode", () => {
     expect(cssText).toContain("padding:10px");
   });
 
+  it("emits valid adjacent CSS rules", () => {
+    const { css } = createStitches({ atomic: true });
+
+    const result = css({ color: "red", padding: "10px" })();
+
+    expect(result.cssText).toMatch(
+      /^@layer seams\.styled\{\.s-\w+\{color:red\}\.s-\w+\{padding:10px\}\}$/,
+    );
+  });
+
+  it("isolates identical declarations across cascade layers", () => {
+    const { css } = createStitches({ atomic: true });
+
+    const baseClass = css({ fontWeight: "500" })()
+      .className.split(" ")
+      .find((className) => className.startsWith("s-"));
+    const inlineClass = css({})({ css: { fontWeight: "500" } })
+      .className.split(" ")
+      .find((className) => className.startsWith("s-"));
+
+    expect(inlineClass).not.toBe(baseClass);
+  });
+
   it("deduplicates identical declarations across components", () => {
     const { css, getCssText } = createStitches({ atomic: true });
 

@@ -4,6 +4,13 @@ import { describe, expect, it } from "vite-plus/test";
 import { Button } from "./ds/Button";
 
 describe("docs atomic CSS", () => {
+  it("includes alternate theme variables before hydration", () => {
+    const html = renderToStaticMarkup(<Button>Theme trigger</Button>);
+
+    expect(html).toContain(".light-theme{");
+    expect(html).toContain("--seams-docs-colors-bg:#FFFFFF");
+  });
+
   it("renders every instance with the complete atomic class set", () => {
     const html = renderToStaticMarkup(
       <main>

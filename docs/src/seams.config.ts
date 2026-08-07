@@ -147,3 +147,5 @@ export const lightTheme = createTheme("light-theme", {
     glow: "0 0 20px rgba(0, 85, 221, 0.1)",
   },
 });
+
+void lightTheme.className;
