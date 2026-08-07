@@ -384,16 +384,13 @@ const createRenderer = (
       singularVariants,
       compoundVariants,
     ] of internals.composers) {
-      if (!sheet.rules.styled.cache.has(composerBaseClass)) {
+      if (config.atomic) {
+        injectAtomic(composerBaseStyle, sheet.rules.styled.cache, captureTarget.styled);
+      } else if (!sheet.rules.styled.cache.has(composerBaseClass)) {
         sheet.rules.styled.cache.add(composerBaseClass);
-
-        if (config.atomic) {
-          injectAtomic(composerBaseStyle, sheet.rules.styled.cache, captureTarget.styled);
-        } else {
-          toCssRules(composerBaseStyle, [`.${composerBaseClass}`], [], config, (cssText) => {
-            captureTarget.styled.apply(cssText);
-          });
-        }
+        toCssRules(composerBaseStyle, [`.${composerBaseClass}`], [], config, (cssText) => {
+          captureTarget.styled.apply(cssText);
+        });
       }
 
       const singularVariantsToAdd = getTargetVariantsToAdd(

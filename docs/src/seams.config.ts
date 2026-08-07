@@ -2,6 +2,7 @@ import { createStitches } from "@artmsilva/seams-react";
 
 export const { styled, css, globalCss, keyframes, createTheme, theme, getCssText } = createStitches(
   {
+    atomic: true,
     prefix: "seams-docs",
     theme: {
       colors: {
