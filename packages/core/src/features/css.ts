@@ -366,10 +366,11 @@ const createRenderer = (
     /** Injects atomic rules into a group, deduplicating by class name. */
     const injectAtomic = (
       style: CSSObject,
+      groupName: RuleGroupName,
       groupCache: Set<string>,
       target: { apply: (cssText: string) => void },
     ): void => {
-      const atomicClasses = toAtomicCssRules(style, config, (className, cssText) => {
+      const atomicClasses = toAtomicCssRules(style, config, groupName, (className, cssText) => {
         if (!groupCache.has(className)) {
           groupCache.add(className);
           target.apply(cssText);
@@ -385,7 +386,7 @@ const createRenderer = (
       compoundVariants,
     ] of internals.composers) {
       if (config.atomic) {
-        injectAtomic(composerBaseStyle, sheet.rules.styled.cache, captureTarget.styled);
+        injectAtomic(composerBaseStyle, "styled", sheet.rules.styled.cache, captureTarget.styled);
       } else if (!sheet.rules.styled.cache.has(composerBaseClass)) {
         sheet.rules.styled.cache.add(composerBaseClass);
         toCssRules(composerBaseStyle, [`.${composerBaseClass}`], [], config, (cssText) => {
@@ -414,7 +415,7 @@ const createRenderer = (
           const targetCaptureGroup = captureTarget[groupName];
 
           if (config.atomic) {
-            injectAtomic(vStyle, groupCache, targetCaptureGroup);
+            injectAtomic(vStyle, groupName, groupCache, targetCaptureGroup);
           } else {
             const variantClassName = `${composerBaseClass}-${toHash(vStyle)}-${vClass}`;
 
@@ -435,7 +436,7 @@ const createRenderer = (
 
         for (const [vClass, vStyle] of variantToAdd) {
           if (config.atomic) {
-            injectAtomic(vStyle, sheet.rules.allvar.cache, captureTarget.allvar);
+            injectAtomic(vStyle, "allvar", sheet.rules.allvar.cache, captureTarget.allvar);
           } else {
             const variantClassName = `${composerBaseClass}-${toHash(vStyle)}-${vClass}`;
 
@@ -461,7 +462,7 @@ const createRenderer = (
       }
 
       if (config.atomic) {
-        injectAtomic(css, sheet.rules.inline.cache, captureTarget.inline);
+        injectAtomic(css, "inline", sheet.rules.inline.cache, captureTarget.inline);
       } else {
         const iClass = `${baseClassName}-i${toHash(css)}-css`;
 
