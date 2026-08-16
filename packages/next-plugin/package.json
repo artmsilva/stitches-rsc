@@ -63,7 +63,7 @@
     "next": "^16.0.0",
     "tsup": "catalog:",
     "typescript": "catalog:",
-    "webpack": "^5.105.0"
+    "webpack": "^5.106.2"
   },
   "peerDependencies": {
     "next": "^14.0.0 || ^15.0.0 || ^16.0.0"
