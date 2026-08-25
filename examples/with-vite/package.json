@@ -13,7 +13,7 @@
     "@artmsilva/seams-vite-plugin": "workspace:*",
     "@vitejs/plugin-react": "^4.5.2",
     "react": "catalog:",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.2.5"
   },
   "devDependencies": {
     "@types/react": "catalog:",
