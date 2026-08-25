@@ -11,7 +11,7 @@
   "dependencies": {
     "@artmsilva/seams-react": "workspace:*",
     "@artmsilva/seams-vite-plugin": "workspace:*",
-    "@vitejs/plugin-react": "^4.5.2",
+    "@vitejs/plugin-react": "^6.0.1",
     "react": "catalog:",
     "react-dom": "^19.0.0"
   },
