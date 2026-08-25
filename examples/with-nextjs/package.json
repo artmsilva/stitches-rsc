@@ -11,7 +11,7 @@
   "dependencies": {
     "@artmsilva/seams-next-plugin": "workspace:*",
     "@artmsilva/seams-react": "workspace:*",
-    "next": "^16.0.0",
+    "next": "^16.2.4",
     "react": "catalog:",
     "react-dom": "^19.0.0"
   },
